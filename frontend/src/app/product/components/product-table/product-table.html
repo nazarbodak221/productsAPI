@@ -1,0 +1,154 @@
+<div class="p-4">
+  <h1 class="text-2xl font-bold mb-4 text-center">Products</h1>
+
+  <div class="mb-4 text-center">
+    <button
+      class="px-4 py-2 bg-blue-300 transition-all duration-300 ease text-white rounded-lg hover:bg-blue-500 active:bg-blue-600"
+      (click)="toggleAddForm()"
+    >
+      {{ showAddForm() ? 'Cancel' : 'Add New Product' }}
+    </button>
+  </div>
+
+  @if (showAddForm()) {
+  <div class="bg-gray-100 p-4 rounded-xl mb-6">
+    <h2 class="text-lg font-semibold mb-2">Add Product</h2>
+    <div class="grid gap-2 md:grid-cols-5">
+      <input
+        class="w-full px-2 py-2 border border-gray-300 rounded-lg transition-all duration-200 ease focus:border-gray-600 focus:outline-none placeholder:text-gray-400 hover:border-gray-500"
+        type="text"
+        placeholder="Name"
+        [(ngModel)]="newProduct().name"
+      />
+      <input
+        class="w-full px-2 py-2 border border-gray-300 rounded-lg transition-all duration-200 ease focus:border-gray-600 focus:outline-none placeholder:text-gray-400 hover:border-gray-500"
+        type="text"
+        placeholder="Image URL"
+        [(ngModel)]="newProduct().image"
+      />
+      <input
+        class="w-full px-2 py-2 border border-gray-300 rounded-lg transition-all duration-200 ease focus:border-gray-600 focus:outline-none placeholder:text-gray-400 hover:border-gray-500"
+        type="text"
+        placeholder="SKU"
+        [(ngModel)]="newProduct().sku"
+      />
+      <input
+        class="w-full px-2 py-2 border border-gray-300 rounded-lg transition-all duration-200 ease focus:border-gray-600 focus:outline-none placeholder:text-gray-400 hover:border-gray-500"
+        type="number"
+        placeholder="Price"
+        [(ngModel)]="newProduct().price"
+      />
+      <input
+        class="w-full px-2 py-2 border border-gray-300 rounded-lg transition-all duration-200 ease focus:border-gray-600 focus:outline-none placeholder:text-gray-400 hover:border-gray-500"
+        type="number"
+        placeholder="Quantity"
+        [(ngModel)]="newProduct().quantity"
+      />
+    </div>
+    <div class="flex justify-end py-2 pr-1">
+      <button
+        class="px-3 py-2 box-border rounded-lg font-semibold text-base bg-blue-500 transition-all duration-200 ease text-white hover:bg-brand-dark active:bg-blue-700"
+        (click)="add()"
+      >
+        Save Product
+      </button>
+    </div>
+  </div>
+  }
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-lg rounded-xl">
+      <thead>
+        <tr class="bg-gray-200 text-left">
+          <th class="p-3">Image</th>
+          <th class="line-clamp-2 p-3">Name</th>
+          <th class="p-3">SKU</th>
+          <th class="p-3">Price</th>
+          <th class="p-3">Quantity</th>
+          <th class="p-3 text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of (products$ | async); track product.id) {
+        <tr class="border-b hover:bg-gray-50">
+          <td class="p-3">
+            <img
+              [src]="product.image"
+              alt="Product"
+              class="w-12 h-12 rounded-lg object-cover"
+            />
+          </td>
+
+          <td class="p-3">
+            @if (editingProduct()?.id === product.id) {
+            <input
+              [(ngModel)]="editingProduct()!.name"
+              class="p-1 border rounded-lg w-full"
+            />
+            } @else { {{ product.name }} }
+          </td>
+
+          <td class="p-3">
+            @if (editingProduct()?.id === product.id) {
+            <input
+              [(ngModel)]="editingProduct()!.sku"
+              class="p-1 border rounded-lg w-full"
+            />
+            } @else { {{ product.sku }} }
+          </td>
+
+          <td class="p-3">
+            @if (editingProduct()?.id === product.id) {
+            <input
+              [(ngModel)]="editingProduct()!.price"
+              type="number"
+              class="p-1 border rounded-lg w-full"
+            />
+            } @else { ${{ product.price }} }
+          </td>
+
+          <td class="p-3">
+            @if (editingProduct()?.id === product.id) {
+            <input
+              [(ngModel)]="editingProduct()!.quantity"
+              type="number"
+              class="p-1 border rounded-lg w-full"
+            />
+            } @else { {{ product.quantity }} }
+          </td>
+
+          <td class="p-3 text-center space-x-2">
+            @if (editingProduct()?.id === product.id) {
+            <button
+              class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              (click)="saveEdit()"
+            >
+              Save
+            </button>
+            <button
+              class="px-3 py-1 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+              (click)="cancelEdit()"
+            >
+              Cancel
+            </button>
+            } @else {
+            <button
+              class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              (click)="saveEdit()"
+            >
+              Edit
+            </button>
+            <button
+              class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              (click)="delete(product.id!)"
+            >
+              Delete
+            </button>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
