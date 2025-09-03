@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtService {
     @Value("${jwt.secret.key}")
     private String secret;
-    private final long EXPIRATION = 5 * 24 * 60 * 60 * 1000;
+    private final long TOKEN_EXPIRATION = 5 * 24 * 60 * 60 * 1000;
 
     private SecretKey getSignKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -23,7 +23,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
                 .signWith(getSignKey(), Jwts.SIG.HS256)
                 .compact();
     }
