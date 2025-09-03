@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+html {
+  font-family: "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bg-gradient {
+  background: linear-gradient(135deg, #f0f4ff 0%, #eef2ff 100%);
+}
