@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cat.project</groupId>
-    <artifactId>AppexoftTestTask</artifactId>
+    <artifactId>ProductApi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>AppexoftTestTask</name>
-    <description>AppexoftTestTask</description>
+    <name>ProductApi</name>
+    <description>ProductApi</description>
     <url/>
     <licenses>
         <license/>
